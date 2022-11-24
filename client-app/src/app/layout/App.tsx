@@ -11,6 +11,7 @@ function App() {
   const apiUrl = "http://localhost:7092/api/activities";
 
   const [activities, setActivities] = useState<Array<Activity>>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
 
   useEffect(()=>{
     axios.get<Array<Activity>>(apiUrl).then(response=>{
@@ -18,11 +19,23 @@ function App() {
     })
   },[])
 
+  function handleSelectActivity(id: string){
+    setSelectedActivity(activities.find(a=>a.id === id));
+  }
+
+  function handleCancelSelectActivity(){
+    setSelectedActivity(undefined);
+  }
+
   return (
     <>
       <NavBar/>
       <Container style={{marginTop: '7em'}} >
-        <ActivityDashboard activities={activities} />
+        <ActivityDashboard 
+          activities={activities} 
+          selectedActivity={selectedActivity}
+          selectActivity = {handleSelectActivity}
+          cancelSelectActivity = {handleCancelSelectActivity} />
       </Container>
     </>
   );
