@@ -21,5 +21,11 @@ namespace API.Controllers
         {
             return await Mediator.Send(new Details.Query { Id = id });
         }
+
+        [HttpPost] //devolvemos IActionResult para tener acceso a los tipos http como 200 ok x ej, pero en realidad no devuelve otra cosa
+        public async Task<IActionResult> CreateActivity(Activity activity)
+        {
+            return Ok(await Mediator.Send(new Create.Command { Activity = activity }));
+        }
     }
 }
