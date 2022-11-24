@@ -10,7 +10,7 @@ function App() {
   const [activities, setActivities] = useState<Array<Activity>>([]);
 
   useEffect(()=>{
-    axios.get(apiUrl).then(response=>{
+    axios.get<Array<Activity>>(apiUrl).then(response=>{
       setActivities(response.data);
     })
   },[])
