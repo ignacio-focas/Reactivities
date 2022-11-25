@@ -1,24 +1,22 @@
+import { observer } from 'mobx-react-lite';
 import React, {useState} from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { Activity } from './../../../app/models/activity';
 
-interface Props{
-    activities: Array<Activity>
-    onDeleteActivity: (id:string) => void
-    submitting: boolean
-}
 
-export default function ActivityList({activities, onDeleteActivity, submitting} : Props) {
 
+export default observer(function ActivityList() {
+
+    const {activityStore} = useStore();
+    const {deleteActivity, activities, loading} = activityStore;
     const [target, setTarget] = useState('');
 
     function handleActivityDelete(e: React.MouseEvent<HTMLButtonElement>, id:string){
         setTarget(e.currentTarget.name);
-        onDeleteActivity(id);
+        deleteActivity(id);
     }
 
-    const {activityStore} = useStore();
 
     return (
         <Segment>
@@ -36,7 +34,7 @@ export default function ActivityList({activities, onDeleteActivity, submitting} 
                                 <Button onClick={()=>activityStore.selectActivity(a.id)} floated='right' content='View' color='blue' />
                                 <Button
                                      name={a.id}
-                                     loading={submitting && target===a.id} 
+                                     loading={loading && target===a.id} 
                                      onClick={(e)=>handleActivityDelete(e, a.id)} 
                                      floated='right' content='Delete' 
                                      color='red' />
@@ -49,3 +47,4 @@ export default function ActivityList({activities, onDeleteActivity, submitting} 
         </Segment>
     )
 }
+)
