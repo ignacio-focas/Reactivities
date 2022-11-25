@@ -6,11 +6,12 @@ import ActivityDashboard from './../../features/activities/dashboard/ActivityDas
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
+import { useStore } from '../stores/store';
 
 
 function App() {
 
-  const apiUrl = "http://localhost:7092/api/activities";
+  const {activityStore} = useStore()
 
   const [activities, setActivities] = useState<Array<Activity>>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
@@ -82,6 +83,7 @@ function App() {
     <>
       <NavBar openForm={handleFormOpen}/>
       <Container style={{marginTop: '7em'}} >
+        <h2>{activityStore.title}</h2>
         <ActivityDashboard 
           activities={activities} 
           selectedActivity={selectedActivity}
