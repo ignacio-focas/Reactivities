@@ -56,7 +56,7 @@ function App() {
         <ActivityDashboard 
           activities={activities} 
           selectedActivity={selectedActivity}
-          selectActivity = {handleSelectActivity}
+          onSelectActivity = {handleSelectActivity}
           cancelSelectActivity = {handleCancelSelectActivity}
           editMode={editMode}
           openForm={handleFormOpen}

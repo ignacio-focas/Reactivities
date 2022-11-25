@@ -8,7 +8,7 @@ import ActivityForm from '../form/ActivityForm';
 interface Props {
     activities: Array<Activity>
     selectedActivity: Activity | undefined
-    selectActivity:(id:string)=> void
+    onSelectActivity:(id:string)=> void
     cancelSelectActivity: () => void
     editMode : boolean
     openForm : (id : string) => void
@@ -17,12 +17,12 @@ interface Props {
     onDeleteActivity: (id: string) => void
 }
 
-export default function ActivityDashboard({activities, selectActivity, selectedActivity, 
+export default function ActivityDashboard({activities, onSelectActivity, selectedActivity, 
         cancelSelectActivity, editMode, openForm, closeForm, createOrEdit, onDeleteActivity}: Props){
     return(
         <Grid>
             <Grid.Column width='10'>
-              <ActivityList activities={activities} selectActivity={selectActivity} onDeleteActivity={onDeleteActivity} />
+              <ActivityList activities={activities} onSelectActivity={onSelectActivity} onDeleteActivity={onDeleteActivity} />
             </Grid.Column>
             <Grid.Column width='6'>
               {selectedActivity && !editMode &&
