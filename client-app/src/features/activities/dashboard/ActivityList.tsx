@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
 import { Activity } from './../../../app/models/activity';
 
 interface Props{
     activities: Array<Activity>
-    onSelectActivity: (id:string) => void
     onDeleteActivity: (id:string) => void
     submitting: boolean
 }
 
-export default function ActivityList({activities, onSelectActivity, onDeleteActivity, submitting} : Props) {
+export default function ActivityList({activities, onDeleteActivity, submitting} : Props) {
 
     const [target, setTarget] = useState('');
 
@@ -17,6 +17,8 @@ export default function ActivityList({activities, onSelectActivity, onDeleteActi
         setTarget(e.currentTarget.name);
         onDeleteActivity(id);
     }
+
+    const {activityStore} = useStore();
 
     return (
         <Segment>
@@ -31,7 +33,7 @@ export default function ActivityList({activities, onSelectActivity, onDeleteActi
                                 <div>{a.city}, {a.venue}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={()=>onSelectActivity(a.id)} floated='right' content='View' color='blue' />
+                                <Button onClick={()=>activityStore.selectActivity(a.id)} floated='right' content='View' color='blue' />
                                 <Button
                                      name={a.id}
                                      loading={submitting && target===a.id} 
