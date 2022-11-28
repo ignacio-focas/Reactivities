@@ -23,8 +23,10 @@ export default observer(function ActivityForm() {
         venue:''
     });
 
+    //el signo de exclamacion en setActivity(activity!) le dice a ts que estamos seguros de esto 
+    //y no hay forma de que sea undefined asi nos deshacemos del error
     useEffect(()=>{
-        if(id) loadActivity(id).then(activity=>setActivity(activity!)) //el signo de exclamacion le dice a ts que estamos seguros de esto y no hay forma de que sea undefined asi nos deshacemos del error
+        if(id) loadActivity(id).then(activity=>setActivity(activity!)) 
     }, [id, loadActivity]);
 
     function handleSubmit(){
