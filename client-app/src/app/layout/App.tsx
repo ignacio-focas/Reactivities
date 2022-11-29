@@ -10,6 +10,7 @@ import NotFound from './../../features/errors/NotFound';
 import { Container } from 'semantic-ui-react';
 import { ToastContainer } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
+import ServerError from '../../features/errors/ServerError';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
               <Route path='/activities/:id' component={ActivityDetails} />
               <Route path={['/createActivity', '/manage/:id']} component={ActivityForm} key={location.key}/>
               <Route path='/errors' component={TestErrors}/>
+              <Route path='/server-error' component={ServerError}/>
               <Route component={NotFound} />
             </Switch>
             </Container>
