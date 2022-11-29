@@ -1,13 +1,18 @@
 using API.Extensions;
 using Application.Activities;
 using Application.Core;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config =>
+{
+    config.RegisterValidatorsFromAssemblyContaining<Create>();
+});
+
 builder.Services.AddApplicationServices(builder.Configuration); //extension method donde movimos todas las configuraciones de servicios
 
 var app = builder.Build();
