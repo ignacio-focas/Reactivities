@@ -2,8 +2,10 @@ using API.Extensions;
 using API.Middleware;
 using Application.Activities;
 using Application.Core;
+using Domain;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -16,6 +18,8 @@ builder.Services.AddControllers().AddFluentValidation(config =>
 
 builder.Services.AddApplicationServices(builder.Configuration); //extension method donde movimos todas las configuraciones de servicios
 
+builder.Services.AddIdentityServices(builder.Configuration);
+
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
@@ -25,8 +29,9 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
     context.Database.Migrate();
-    await Seed.SeedData(context);
+    await Seed.SeedData(context, userManager);
 }
 catch (Exception ex)
 {
