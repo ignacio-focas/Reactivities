@@ -5,13 +5,20 @@ using Application.Core;
 using Domain;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddFluentValidation(config =>
+builder.Services.AddControllers(opt =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    opt.Filters.Add(new AuthorizeFilter(policy));
+})
+    .AddFluentValidation(config =>
 {
     config.RegisterValidatorsFromAssemblyContaining<Create>();
 });
