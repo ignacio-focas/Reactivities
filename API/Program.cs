@@ -50,6 +50,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication(); //es imoprtante el orden, autenticación va antes de autorización
+
 app.UseAuthorization();
 
 app.MapControllers();
