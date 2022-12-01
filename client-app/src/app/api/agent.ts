@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { request } from 'http';
 import { toast } from 'react-toastify';
 import { history } from '../..';
+import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 import { Activity } from './../models/activity';
 
@@ -69,8 +71,15 @@ const Activities = {
 
 }
 
+const Account = {
+    current: () => requests.get<User>('account'),
+    login: (user: UserFormValues) => requests.post('/account/login', user),
+    register: (user: UserFormValues) => requests.post('/account/register', user)
+}
+
 const agent = {
-    Activities
+    Activities,
+    Account
 }
 
 export default agent;
